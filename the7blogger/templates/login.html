@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}t7b . sign in{% endblock %}
+
+{% block content %}
+
+    {% if error_message %}
+        <p style="color: red;">
+            {{ error_message }}
+        </p>
+    {% endif %}
+
+    <div id="login" class="signup_forms" >
+        <h2>Please sign in below</h2>
+        <form action="" method="post">{% csrf_token %}
+                {{ form.as_p }}
+            <input type="submit" value="login" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+        <h4>Do not have an account? Please <a href='{% url 'user_registration' %}'>register now</a></h4>
+    </div>
+
+{% endblock %}

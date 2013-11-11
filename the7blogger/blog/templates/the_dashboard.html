@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+
+    <div id="dashboard">
+
+    <div class="post">
+        <a href="{% url 'blog:my_posts' %}" style="">
+        <img src='/static/assets/img/thesevenblogger_logo.jpg' alt=""/>
+        </a>
+    </div>
+    {% if posts.count > 0 %}
+        {% for post in posts %}
+                {% if post.photo %}
+
+
+                    <div class="post">
+                        <a href="{{ post.get_absolute_url }}" >
+                        <span class="go-hover">
+                            <br>
+                            <h1>{{ post.title }}</h1>
+                            <span><i>{{ post.body }}</i></span>
+                            <br>
+                            <span>{{ post.likes }} : likes</span>
+                            <br>
+                            <span>Posted on {{ post.get_created_as_string }} by {{ post.user }}</span>
+                        </span>
+                        <img src='/static/{{ post.photo }}' alt=""/>
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+        {% endfor %}
+
+
+
+    {% else %}
+
+        <p>Uppsss!! nothing to show yet..</p>
+
+    {% endif %}
+
+
+    </div>
+    </div>
+
+
+{% endblock %}

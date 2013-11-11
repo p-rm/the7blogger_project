@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}the7blogger{% endblock %}</title>
+        <!-- <link href='/static/css/the7blogger.css' rel='stylesheet' type='text/css' /> -->
+        <link href="{% static "assets/css/the7blogger.css" %}" rel='stylesheet' type='text/css' />
+        <link href='http://fonts.googleapis.com/css?family=Lustria' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lustria|Lato' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+        /*
+        $(document).ready(function() {
+            $("#id_username").attr("placeholder", "Username");
+        });
+        */
+    </script>
+    </head>
+    <body>
+    <div id="wrapper">
+        <div id="header">
+            <div id="header-title">
+                <h4>The Seven Blogger</h4>
+            </div>
+            <div id="header-menu-right">
+                {% block nav-global %}
+                        {% if user.is_authenticated %}
+                            hello, {{ user.username }}
+                            <a href='{% url 'user_logout' %}'> > logout</a>
+                        {% else %}
+                            <a href='{% url 'user_login' %}'> > sign in</a>
+                        {% endif %}
+
+                {% endblock %}
+            </div>
+            <div id="header-menu-left">
+                <label id="lbTodayTime" >{% block TodayTime %}{% endblock %}</label>
+            </div>
+        </div>
+        <div id="sidebar">
+            {% if user.is_authenticated %}
+                <h3><a href="{% url 'blog:the_dashboard' %}">The Dashboard</a></h3>
+                <h3><a href="{% url 'blog:my_posts' %}">My Posts</a></h3>
+                <h3><a href="{% url 'blog:new_post' %}">New Post</a></h3>
+            {% endif %}
+            {% block sidebar %} {% endblock %}
+        </div>
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+        <div id="bottom">
+            The Seven Blogger (beta) © Copyright 2013 . You can find me on
+            <a href="http://github.com/p-rm">GitHub</a>
+        </div>
+    </div>
+    </body>
+</html>

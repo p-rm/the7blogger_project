@@ -1,0 +1,47 @@
+application: the7blogger
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+libraries:
+- name: django
+  version: "1.5"
+
+- name: MySQLdb
+  version: latest
+
+builtins:
+- django_wsgi: on
+
+handlers:
+- url: /static/assets/css
+  static_dir: static/assets/css
+  expiration: '0'
+
+- url: /static/assets/js
+  static_dir: static/assets/js
+  expiration: '0'
+
+- url: /static/assets/img
+  static_dir: static/assets/img
+  expiration: '0'
+
+- url: /static/admin/css
+  static_dir: static/admin/css
+  expiration: '0'
+
+- url: /static/admin/js
+  static_dir: static/admin/js
+  expiration: '0'
+
+- url: /static/admin/img
+  static_dir: static/admin/img
+  expiration: '0'
+
+
+- url: /.*
+  script: main.app
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: 'the7blogger.settings'

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+
+    <div id="newpost">
+        {% if form.errors %}
+            <p style="color: red;">
+                Hmmm.. there are some errors below {{ form.errors|pluralize }} below.
+            </p>
+        {% endif %}
+
+        <h1>Fancy a new post today?</h1>
+        <br/>
+        <form action="{% url 'blog:new_post' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                {{ form.as_p }}
+            <input type="submit" name="submit" value="Update Blog">
+        </form>
+    </div>
+
+{% endblock %}

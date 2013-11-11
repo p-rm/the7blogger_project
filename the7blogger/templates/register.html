@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}t7b . create an account{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <div id="register" class="signup_forms">
+        <h1>The Seven Blogger</h1>
+        <h3>Create an account</h3>
+        <form action="" method="post">{% csrf_token %}
+                {{ form.as_p }}
+            <input type="submit" name="submit" value="Register">
+        </form>
+        <h4>Already have an account? Please <a href='{% url 'user_login' %}'>sign in</a></h4>
+    </div>
+{% endblock %}

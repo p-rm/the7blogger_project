@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+
+    <h1>{{ post.title }}</h1>
+
+    <p>{{ post.body }}</p>
+
+    {% if post.photo %}
+        <p><img src='/static/{{ post.photo }}' width='200' /></p>
+    {% endif %}
+
+    <p>{{ post.likes }} : likes</p>
+
+    <p><a href="{% url 'blog:post_like' post.id %}">Like</a></p>
+
+    <h2>Comments</h2>
+
+    {% for comment in post.comment_set.all %}
+        <p>{{comment.author}}: {{comment.body}}</p>
+    {% endfor %}
+
+    <p>
+        <a href="{% url 'blog:post_add_comment' post.id %}">Add Comment</a>
+    </p>
+
+{% endblock %}

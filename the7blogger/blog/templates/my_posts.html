@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+
+    {% if posts.object_list and posts.paginator.num_pages > 0 %}
+        {% for post in posts %}
+            <div id="mywall-post">
+                {% if post.photo %}
+
+                        <div id="mywall-post-info">
+                            <h1><a href="{{ post.get_absolute_url }}"> {{ post.title }}</a></h1>
+
+                            <span><div class="datetime">Posted on {{ post.get_created_as_string }}</div></span>
+                            <p><i>{{ post.body|linebreaks }}</i></p>
+                            <p>
+                                <a href="{{ post.get_absolute_url }}comments/">
+                                    {{ post.comment_set.count }} : comments
+                                </a>
+                                <br/>
+                                <a href="{{ post.get_absolute_url }}like/?page={{ posts.number }}">
+                                    {{ post.likes }} : likes
+                                </a>
+                            </p>
+
+                            <div id="pagination" >
+                                <span>
+                                    post {{ posts.number }} of {{ posts.paginator.num_pages }}
+                                </span>
+                                <span class="step-links">
+                                    {% if posts.has_previous %}
+                                        |<a href="../my-posts">latest </a>
+                                        |<a href= "?page={{ posts.previous_page_number }}"> newer </a>
+                                    {% endif %}
+                                </span>
+                                <span class="step-links">
+                                    {% if posts.has_next %}
+                                        |<a href="?page={{ posts.next_page_number }}"> older </a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+
+                    <div id="img-blog">
+                        <img src='/static/{{ post.photo }}' width='100%' />
+                    </div>
+
+                {% endif %}
+
+            </div>
+        {% endfor %}
+
+
+
+    {% else %}
+
+        <p>Uppsss!! nothing to show yet..</p>
+
+    {% endif %}
+
+{% endblock %}

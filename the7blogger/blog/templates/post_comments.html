@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+    {% if post.photo %}
+        <div id="post-comment">
+
+                        <div id="post-comment-info">
+                            {% if form.errors %}
+                                <p style="color: red;">
+                                Please check the error{{ form.errors|pluralize }} below.
+                                </p>
+                            {% endif %}
+
+                            <h1>{{ post.title }}</h1>
+                            <p>{{ post.body }}</p>
+                            <p>{{ post.likes }} : likes</p>
+
+                            <form action="" method="POST">{% csrf_token %}
+                                {{ form.as_p }}
+                                <input type="submit" name="submit" value="Add Comment">
+                            </form>
+                            <br>
+                            {% if comments.count > 0 %}
+                                <h4>Comments</h4>
+                                <br>
+                                <form action="{{ post.get_absolute_url }}delete-all-comments/" method="POST">{% csrf_token %}
+                                    {% for comment in comments %}
+                                        <span>{{ comment.author }} @ {{ comment.created }}</span>
+                                        <span>{{ comment.body|linebreaks }}</span>
+
+                                        {% if user.is_staff or post.user.username == user.username %}
+                                            <input type="checkbox" name="delete" value="{{ comment.pk }}">
+                                            <a href="{{ post.get_absolute_url }}delete-comment/{{ comment.pk }}/">delete</a>
+                                        {% endif %}
+                                        <br>
+                                    {% endfor %}
+
+                                    {% if user.is_staff or post.user.username == user.username %}
+                                        <p><input type="submit" value="Delete all selected"></p>
+                                    {% endif %}
+
+                                </form>
+
+                            {% endif %}
+
+
+
+
+                        </div>
+
+                        <div id="post-comment-img" >
+                            <img src='/static/{{ post.photo }}' width="150px" />
+                        </div>
+
+        </div>
+
+    {% endif %}
+{% endblock %}
